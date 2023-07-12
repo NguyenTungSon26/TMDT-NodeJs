@@ -1,16 +1,31 @@
-const express = require("express")
+const express = require("express");
 const app = express();
-const config = require("config")
+const session = require("express-session");
+const config = require("config");
 
-//Router
-app.use(express.urlencoded({extended:true}))
-app.use(express.json())
+// Session
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+  session({
+    secret: config.get("app.session_key"),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
-app.use(require(config.get("app.router")))
+// Form
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.use("/static", express.static(config.get("app.static_folder")))
+// Router
+app.use(require(config.get("app.router")));
+
+// Static folder
+app.use("/static", express.static(config.get("app.static_folder")));
+
+// View
 app.set("views", config.get("app.view_folder"));
 app.set("view engine", config.get("app.view_engine"));
 
-
-module.exports = app
+module.exports = app;
