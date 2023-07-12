@@ -1,6 +1,19 @@
+const CategoryModel = require("../models/category");
+const ProductModel = require("../models/product");
+
 const test =(req,res)=>{
+    
+    ProductModel.find().populate({path:"cat_id"}).exec((err,docs)=>{
+        console.log(docs);
+    })
+    // const category = {
+    //     description: "Bphone description",
+    //     title: "Bphone title",
+    //     slug:"Bphone-slug"
+    // }
+    // new CategoryModel(category).save()
     // res.send("Hello")
-    res.render("admin/test",{data2: "Son"})
+    // res.render("admin/test",{data2: "Son"})
     // const f = (obj)=>obj;
     // const obj = {
     //     a: "JS",

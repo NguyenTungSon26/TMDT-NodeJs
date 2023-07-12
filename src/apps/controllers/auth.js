@@ -1,13 +1,16 @@
+const UserModel = require("../models/user")
+
 const getLogin = (req,res)=>{
     res.render("admin/login", {data:{}})
 }
-const postLogin = (req,res)=>{
+const postLogin = async (req,res)=>{
     const {email, password} = req.body
-    let error = null
+    let error = null 
+    const users = await UserModel.find({email,password})
     if(email=="" || password ==""){
         error = "Tai khoan va mat khau khong duoc de trong !"
     }
-    else if(email == "abc@gmail.com" && password == "123456"){
+    else if(users.length>0){
         res.redirect("/admin/dashboard")
     }
     else{
