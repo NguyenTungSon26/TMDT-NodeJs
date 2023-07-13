@@ -11,9 +11,9 @@ const ProductController = require("../apps/controllers/product");
 const AuthMiddleware = require("../apps/middlewares/auth");
 
 //Router Admin
-router.get("/", (req, res) => {
-  res.send("Hello world");
-});
+// router.get("/", (req, res) => {
+//   res.send("Hello world");
+// });
 router.get("/test", TestController.test);
 router.get("/test1", TestController.test1);
 router.get("/test2", TestController.test2);

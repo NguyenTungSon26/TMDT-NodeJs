@@ -20,7 +20,8 @@ const postLogin = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  res.send("logout");
+  req.session.destroy();
+  res.redirect("/admin/login");
 };
 module.exports = {
   getLogin,
