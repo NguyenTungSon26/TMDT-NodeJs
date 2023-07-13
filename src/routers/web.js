@@ -9,7 +9,7 @@ const ProductController = require("../apps/controllers/product");
 
 // Import Middleware
 const AuthMiddleware = require("../apps/middlewares/auth");
-
+const UploadMiddleware = require("../apps/middlewares/upload");
 //Router Admin
 // router.get("/", (req, res) => {
 //   res.send("Hello world");
@@ -44,6 +44,12 @@ router.get(
   "/admin/products/create",
   AuthMiddleware.checkAdmin,
   ProductController.create
+);
+router.post(
+  "/admin/products/store",
+  AuthMiddleware.checkAdmin,
+  UploadMiddleware.single("thumbnail"),
+  ProductController.store
 );
 router.get(
   "/admin/products/edit/:id",

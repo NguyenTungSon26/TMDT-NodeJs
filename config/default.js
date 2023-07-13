@@ -6,5 +6,6 @@ module.exports = {
     view_folder: `${__dirname}/../src/apps/views`,
     view_engine: "ejs",
     session_key: "son",
+    tmp: `${__dirname}/../src/tmp`,
   },
 };
