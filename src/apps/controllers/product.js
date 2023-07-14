@@ -82,15 +82,12 @@ const update = async (req, res) => {
       name: body.name,
       slug: slug(body.name),
     };
-    console.log("🚀 ~ file: product.js:85 ~ update ~ product:", product);
     if (file) {
       const thumbnail = "products/" + file.originalname;
-      console.log("🚀 ~ file: product.js:87 ~ update ~ thumbnail:", thumbnail);
       fs.renameSync(file.path, path.resolve("src/public/images", thumbnail));
       product["thumbnail"] = thumbnail;
     }
-    const dbs = await ProductModel.updateOne({ _id: id }, { $set: product });
-    console.log("🚀 ~ file: product.js:93 ~ update ~ dbs:", dbs);
+    await ProductModel.updateOne({ _id: id }, { $set: product });
     res.redirect("/admin/products");
   } catch (error) {
     console.error(error);
