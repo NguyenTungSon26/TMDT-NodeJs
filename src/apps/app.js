@@ -26,6 +26,7 @@ app.set("views", config.get("app.view_folder"));
 app.set("view engine", config.get("app.view_engine"));
 
 // Share Menu
+app.use(require("./middlewares/cart"));
 app.use(require("./middlewares/share"));
 
 // Router

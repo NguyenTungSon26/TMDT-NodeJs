@@ -55,9 +55,34 @@ const search = async (req, res) => {
 
   res.render("site/search", { keyword, products });
 };
+const addToCart = async (req, res) => {
+  const { id, qty } = req.body;
+  let cart = req.session.cart;
+  let isProductExists = false;
+  cart.map((item) => {
+    if (item.id === id) {
+      item.qty += parseInt(qty);
+      isProductExists = true;
+    }
+    return item;
+  });
+  if (!isProductExists) {
+    const product = await ProductModel.findById(id);
+    cart.push({
+      id,
+      name: product.name,
+      price: product.price,
+      img: product.thumbnail,
+      qty: parseInt(qty),
+    });
+  }
+  req.session.cart = cart;
+  res.redirect("/cart");
+};
 const cart = (req, res) => {
   res.render("site/cart");
 };
+
 const success = (req, res) => {
   res.render("site/success");
 };
@@ -69,5 +94,6 @@ module.exports = {
   comment,
   search,
   cart,
+  addToCart,
   success,
 };
