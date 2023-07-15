@@ -7,6 +7,9 @@ const AuthController = require("../apps/controllers/auth");
 const AdminController = require("../apps/controllers/admin");
 const ProductController = require("../apps/controllers/product");
 
+// Controller Site
+const SiteController = require("../apps/controllers/site");
+
 // Import Middleware
 const AuthMiddleware = require("../apps/middlewares/auth");
 const UploadMiddleware = require("../apps/middlewares/upload");
@@ -63,5 +66,13 @@ router.post(
   ProductController.update
 );
 router.get("/admin/products/delete/:id", ProductController.del);
+
+// Router site
+router.get("/", SiteController.home);
+router.get("/category", SiteController.category);
+router.get("/product", SiteController.product);
+router.get("/search", SiteController.search);
+router.get("/cart", SiteController.cart);
+router.get("/success", SiteController.success);
 
 module.exports = router;
