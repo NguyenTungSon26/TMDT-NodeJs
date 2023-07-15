@@ -18,14 +18,17 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Router
-app.use(require(config.get("app.router")));
-
 // Static folder
 app.use("/static", express.static(config.get("app.static_folder")));
 
 // View
 app.set("views", config.get("app.view_folder"));
 app.set("view engine", config.get("app.view_engine"));
+
+// Share Menu
+app.use(require("./middlewares/share"));
+
+// Router
+app.use(require(config.get("app.router")));
 
 module.exports = app;
