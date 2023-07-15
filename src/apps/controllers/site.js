@@ -1,3 +1,4 @@
+const CategoryModel = require("../models/category");
 const ProductModel = require("../models/product");
 
 const home = async (req, res) => {
@@ -12,11 +13,18 @@ const home = async (req, res) => {
     .limit(6);
   res.render("site", { featuredProduct, latestProduct });
 };
-const category = (req, res) => {
-  res.render("site/category");
+const category = async (req, res) => {
+  const { id } = req.params;
+  const products = await ProductModel.find({ cat_id: id }).sort({ _id: -1 });
+  const category = await CategoryModel.findById(id);
+  const title = category.title;
+  const total = products.length;
+  res.render("site/category", { products, title, total });
 };
-const product = (req, res) => {
-  res.render("site/product");
+const product = async (req, res) => {
+  const { id } = req.params;
+  const product = await ProductModel.findById(id);
+  res.render("site/product", { product });
 };
 const search = (req, res) => {
   res.render("site/search");
