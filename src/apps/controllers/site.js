@@ -80,9 +80,29 @@ const addToCart = async (req, res) => {
   res.redirect("/cart");
 };
 const cart = (req, res) => {
-  res.render("site/cart");
+  const cart = req.session.cart;
+  res.render("site/cart", { cart });
 };
 
+const updateCart = (req, res) => {
+  const { products } = req.body;
+  let cart = req.session.cart;
+  cart.map((item) => {
+    return (item.qty = parseInt(products[item.id]["qty"]));
+  });
+  req.session.cart = cart;
+  res.redirect("/cart");
+  // console.log(products);
+};
+const delCart = (req, res) => {
+  const { id } = req.params;
+  let cart = req.session.cart;
+  const newCart = cart.filter((item) => {
+    return item.id != id;
+  });
+  req.session.cart = newCart;
+  res.redirect("/cart");
+};
 const success = (req, res) => {
   res.render("site/success");
 };
@@ -94,6 +114,8 @@ module.exports = {
   comment,
   search,
   cart,
+  updateCart,
   addToCart,
+  delCart,
   success,
 };
